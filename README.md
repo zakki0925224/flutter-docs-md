@@ -11,7 +11,7 @@ Flutter の開発言語には**Dart**が採用されている。
 
 ## Flutter 入門
 
-- https://dart.dev/
+- https://dart.dev/docs/
 
 ### 変数
 
@@ -184,7 +184,98 @@ var list3 = [0, ...?null, 4]; // [0, 4]
 
 ### コメント
 
+- `//`: 1 行コメント
+- `/** **/`: 複数行コメント
+- `///`: ドキュメントコメント
+
+```dart
+void main() {
+  // print("Hello!");
+
+  /**
+  var larry = Llama();
+  larry.feed();
+  larry.exercise();
+  larry.clean();
+  **/
+}
+```
+
+```dart
+/// A domesticated South American camelid (Lama glama).
+///
+/// Andean cultures have used llamas as meat and pack
+/// animals since pre-Hispanic times.
+///
+/// Just like any other animal, llamas need to eat,
+/// so don't forget to [feed] them some [Food].
+class Llama {
+  String? name;
+
+  /// Feeds your llama [food].
+  ///
+  /// The typical llama eats one bale of hay per week.
+  void feed(Food food) {
+    // ...
+  }
+
+  /// Exercises your llama with an [activity] for
+  /// [timeLimit] minutes.
+  void exercise(Activity activity, int timeLimit) {
+    // ...
+  }
+}
+```
+
 ### 型
+
+Dart には、以下のような主な組み込み型がある。
+
+- `int`：整数型
+- `double`：浮動小数点数型
+- `num`：数値型（`int`と`double`の親）
+- `String`：文字列型
+- `bool`：真偽値型
+- `List`：リスト（配列）型
+- `Map`：マップ（連想配列）型
+- `Set`：集合型
+- `dynamic`：動的型（任意の型を格納可能）
+- `Object`：全ての型の基底
+
+```dart
+int year = 2024;
+double pi = 3.1415;
+num anyNumber = 10; // int も double も代入可能
+String greeting = 'Hello, Dart!';
+bool isActive = true;
+
+List<int> numbers = [1, 2, 3];
+Map<String, int> scores = {'Alice': 90, 'Bob': 80};
+Set<String> fruits = {'apple', 'banana', 'orange'};
+
+dynamic anything = '文字列もOK';
+anything = 123; // int もOK
+Object obj = '何でもObject';
+```
+
+#### 型推論
+
+`var`や`final`を使うと、右辺の値から型が自動的に推論される。
+
+```dart
+var city = 'Tokyo'; // String型と推論される
+final price = 1200; // int型と推論される
+```
+
+#### 型変換
+
+型変換には`toString()`や`parse()`などのメソッドを利用する。
+
+```dart
+int n = int.parse('42'); // 文字列→int
+double d = double.parse('3.14'); // 文字列→double
+String s = n.toString(); // int→文字列
+```
 
 ### パターン構文 (`switch`)
 
