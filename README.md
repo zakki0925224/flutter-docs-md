@@ -9,8 +9,6 @@ Flutter の開発言語には**Dart**が採用されている。
 
 **Dart** (ダート/ダーツ)は、Google によって開発されたコンパイル型言語である。静的型付け、C スタイル構文、マルチパラダイムが特徴であり、Flutter による Web / モバイルアプリ開発などに使用される。
 
-## Flutter 入門
-
 - https://dart.dev/docs/
 
 ### 変数
@@ -279,13 +277,115 @@ String s = n.toString(); // int→文字列
 
 ### パターン構文 (`switch`)
 
+Dart の `switch` 文は、値や型に応じて分岐処理を行う。Dart 3 以降ではパターンマッチングもサポートされている。
+
+```dart
+var value = 2;
+switch (value) {
+  case 1:
+    print('one');
+    break;
+  case 2:
+    print('two');
+    break;
+  default:
+    print('other');
+}
+
+// パターンマッチングの例（Dart 3以降）
+Object obj = 'hello';
+switch (obj) {
+  case int n:
+    print('int: $n');
+    break;
+  case String s when s.length > 3:
+    print('long string: $s');
+    break;
+  default:
+    print('other');
+}
+```
+
 ### 制御構文
 
 #### ループ (`for`/`while`/`do while`/`break`/`continue`)
 
+Dart では様々なループ構文が利用できる。
+
+```dart
+// for文
+for (var i = 0; i < 3; i++) {
+  print(i);
+}
+
+// for-in文
+for (var item in [1, 2, 3]) {
+  print(item);
+}
+
+// while文
+var count = 0;
+while (count < 3) {
+  print(count);
+  count++;
+}
+
+// do-while文
+int n = 0;
+do {
+  print(n);
+  n++;
+} while (n < 3);
+
+// breakとcontinue
+for (var i = 0; i < 5; i++) {
+  if (i == 2) continue; // 2のときスキップ
+  if (i == 4) break;    // 4でループ終了
+  print(i);
+}
+```
+
 #### 分岐 (`if`/`if-case`/`switch`)
 
+条件分岐には `if` 文や `switch` 文が使える。
+
+```dart
+var score = 80;
+if (score >= 90) {
+  print('Excellent');
+} else if (score >= 70) {
+  print('Good');
+} else {
+  print('Try harder');
+}
+
+// if-case（Dart 3以降）
+Object obj = 42;
+if (obj is int && obj > 10) {
+  print('int and > 10');
+}
+```
+
 #### エラーハンドリング (`try`/`catch`/`throw`)
+
+Dart では例外処理に `try` / `catch` / `finally` を使う。
+
+```dart
+try {
+  int result = int.parse('abc'); // 例外発生
+} catch (e) {
+  print('エラー: $e');
+} finally {
+  print('終了処理');
+}
+
+// 例外を投げる
+void check(int n) {
+  if (n < 0) {
+    throw ArgumentError('nは0以上である必要があります');
+  }
+}
+```
 
 ### 関数
 
