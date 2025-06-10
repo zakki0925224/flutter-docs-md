@@ -389,21 +389,204 @@ void check(int n) {
 
 ### 関数
 
+Dart では関数もファーストクラスオブジェクトとして扱われ、変数に代入したり、引数として渡したりできる。
+
+```dart
+// 通常の関数定義
+int add(int a, int b) {
+  return a + b;
+}
+
+// 短縮構文（アロー関数）
+int multiply(int a, int b) => a * b;
+
+// 省略可能引数（デフォルト値あり）
+String greet(String name, [String suffix = 'さん']) {
+  return 'こんにちは、$name$suffix';
+}
+
+// 名前付き引数（{}で囲む、デフォルト値も指定可）
+void printInfo({required String name, int age = 0}) {
+  print('名前: $name, 年齢: $age');
+}
+
+// 無名関数（ラムダ式）
+var list = [1, 2, 3];
+list.forEach((item) {
+  print(item);
+});
+```
+
+#### 関数型
+
+関数自体を型として扱うことができる。
+
+```dart
+int calc(int a, int b) => a + b;
+void exec(int Function(int, int) op) {
+  print(op(2, 3));
+}
+exec(calc); // 5
+```
+
 ### メタデータ
+
+Dart ではアノテーション（メタデータ）を `@` 記号で付与できる。主にライブラリやツール向けの情報付加に使う。
+
+```dart
+@deprecated
+void oldFunction() {
+  // 非推奨の関数
+}
+
+@override
+String toString() => 'MyClass';
+```
 
 ### ライブラリのインポート
 
+外部ライブラリやファイルを `import` 文で読み込む。
+
+```dart
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'my_utils.dart' as utils;
+```
+
+- `as` でプレフィックス指定
+- `show`/`hide` で特定の識別子のみインポート/除外
+
+```dart
+import 'dart:math' show pi, sqrt;
+import 'dart:math' hide Random;
+```
+
 ### クラス
+
+Dart ではクラスベースのオブジェクト指向がサポートされている。
+
+```dart
+class Point {
+  int x;
+  int y;
+
+  // コンストラクター
+  Point(this.x, this.y);
+
+  // メソッド
+  void move(int dx, int dy) {
+    x += dx;
+    y += dy;
+  }
+}
+```
 
 #### コンストラクター
 
+- 通常コンストラクター
+- 名前付きコンストラクター
+- 初期化リスト
+- ファクトリーコンストラクター
+
+```dart
+class Person {
+  String name;
+  int age;
+
+  // 通常コンストラクター
+  Person(this.name, this.age);
+
+  // 名前付きコンストラクター
+  Person.guest() : name = 'ゲスト', age = 0;
+
+  // 初期化リスト
+  Person.withBirth(String name, int birthYear)
+      : name = name,
+        age = DateTime.now().year - birthYear;
+
+  // ファクトリーコンストラクター
+  factory Person.fromJson(Map<String, dynamic> json) {
+    return Person(json['name'], json['age']);
+  }
+}
+```
+
 #### メソッド
+
+クラス内で定義する関数をメソッドと呼ぶ。`static` を付けるとクラスメソッドになる。
+
+```dart
+class Calculator {
+  int add(int a, int b) => a + b;
+
+  static int multiply(int a, int b) => a * b;
+}
+```
 
 #### 継承
 
+Dart ではクラスの継承がサポートされている。`extends` キーワードで親クラスを指定する。
+
+```dart
+class Animal {
+  void eat() {
+    print('食事中');
+  }
+}
+
+class Dog extends Animal {
+  void bark() {
+    print('ワンワン');
+  }
+}
+
+var dog = Dog();
+dog.eat(); // 親クラスのメソッド
+dog.bark(); // 子クラスのメソッド
+```
+
 #### Mixins
 
+Mixin を使うと、複数のクラスから機能を継承できる。`with` キーワードを使う。
+
+```dart
+class Flyer {
+  void fly() {
+    print('飛んでいます');
+  }
+}
+
+class Swimmer {
+  void swim() {
+    print('泳いでいます');
+  }
+}
+
+class Duck with Flyer, Swimmer {
+  void quack() {
+    print('ガーガー');
+  }
+}
+
+var duck = Duck();
+duck.fly();
+duck.swim();
+duck.quack();
+```
+
 #### 列挙体
+
+列挙型は、関連する定数の集合を表す。`enum` キーワードで定義する。
+
+```dart
+enum Color {
+  red,
+  green,
+  blue
+}
+
+var c = Color.green;
+```
 
 #### 拡張メソッド
 
