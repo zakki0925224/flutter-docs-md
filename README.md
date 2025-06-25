@@ -590,11 +590,70 @@ var c = Color.green;
 
 #### 拡張メソッド
 
+拡張メソッドを使うと、既存のクラスに新しいメソッドを追加できる。`extension`キーワードで定義する。
+
+```dart
+extension StringExtension on String {
+  String hello() => 'Hello, $this!';
+}
+
+var s = 'Dart';
+print(s.hello()); // Hello, Dart!
+```
+
 #### `extension type`
+
+`extension type`は、既存の型に新しい型として振る舞いを追加できる（Dart 3以降）。
+
+```dart
+extension type UserId(int value) {
+  int get id => value;
+  String toHex() => value.toRadixString(16);
+}
+
+var uid = UserId(42);
+print(uid.id);      // 42
+print(uid.toHex()); // 2a
+```
 
 #### 呼び出し可能なオブジェクト
 
+クラスに`call`メソッドを定義すると、インスタンスを関数のように呼び出せる。
+
+```dart
+class Adder {
+  int call(int a, int b) => a + b;
+}
+
+var add = Adder();
+print(add(2, 3)); // 5
+```
+
 ### クラス修飾子
+
+Dart 3以降では、クラスの継承やインスタンス化の制約を修飾子で指定できる。
+
+- `abstract`：抽象クラス（直接インスタンス化できない）
+- `base`：継承はできるが、`base`/`final`/`sealed`クラスからのみ継承可能
+- `interface`：インターフェースとしてのみ実装可能
+- `final`：継承不可
+- `sealed`：同じライブラリ内でのみ継承可能
+
+```dart
+abstract class Animal {
+  void speak();
+}
+
+base class BaseClass {}
+
+interface class MyInterface {
+  void foo();
+}
+
+final class FinalClass {}
+
+sealed class SealedClass {}
+```
 
 ### 並行プログラミング
 
