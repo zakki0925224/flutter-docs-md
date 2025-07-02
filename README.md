@@ -657,10 +657,72 @@ sealed class SealedClass {}
 
 ### 並行プログラミング
 
+Dart では、非同期処理やアイソレーション（Isolate）を使って並行プログラミングができる。
+
 #### 非同期プログラミング
+
+`Future`や`async`/`await`を使うことで、非同期処理を簡単に記述できる。
+
+```dart
+Future<String> fetchData() async {
+  await Future.delayed(Duration(seconds: 1));
+  return 'データ取得完了';
+}
+
+void main() async {
+  print('取得開始');
+  var result = await fetchData();
+  print(result);
+}
+```
 
 #### アイソレーション
 
+Dart では、`Isolate`を使ってメインスレッドとは独立した並行処理ができる。Isolate間はメッセージで通信する。
+
+```dart
+import 'dart:isolate';
+
+void sayHello(SendPort sendPort) {
+  sendPort.send('Hello from Isolate!');
+}
+
+void main() async {
+  var receivePort = ReceivePort();
+  await Isolate.spawn(sayHello, receivePort.sendPort);
+  print(await receivePort.first); // Hello from Isolate!
+}
+```
+
 ### null 安全
 
+Dart は null 安全（null safety）をサポートしており、null 許容型と非許容型を区別できる。null 安全により、null 参照によるエラーを防げる。
+
+```dart
+String? name; // nullを許容
+name = null; // OK
+
+String message = 'Hello';
+// message = null; // エラー（非許容型にはnullを代入できない）
+```
+
 ### 予約語
+
+Dart には、言語仕様で予約されているキーワードがある。これらは変数名や関数名などに使えない。
+
+```
+abstract  else      import    super
+as        enum      in        switch
+assert    export    interface  sync
+async     extends   is        this
+await     extension late      throw
+break     external  library   true
+case      factory   mixin     try
+catch     false     new       typedef
+class     final     null      var
+const     finally   on        void
+continue  for       operator  while
+covariant Function  part      with
+default   get       required  yield
+do        hide      rethrow
+```
